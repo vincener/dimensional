@@ -1,0 +1,63 @@
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>长方体</title>
+        <script src="../lib/three.js"></script>
+    </head>
+    
+    <body onload="init();">
+        <script>
+            function init() {
+             // 渲染器
+            var renderer = new THREE.WebGLRenderer();
+            // 设定渲染器尺寸
+            renderer.setSize(800, 600);
+            // 添加到dom
+            document.body.appendChild(renderer.domElement);
+            // 重绘时颜色
+            renderer.setClearColor(0x000000);
+
+            // 场景
+            var scene = new THREE.Scene();
+
+            // 相机
+            var camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
+            // 设定相机位置
+            camera.position.set(0, -1, 0);
+            // 相机看向
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+            scene.add(camera);
+
+            // 定义一个几何体
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-2, 0, 0));
+            geometry.vertices.push(new THREE.Vector3(2, 0, 0));
+            // for循环出来六条线段
+            for (var i = 0; i <= 10; i++) {
+                // 定义竖着的线段
+                var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({
+                    color: 0xffffff,
+                }));
+                // 每条线段之间的间隔为0.8，-2是为了达到田字格的效果
+                line.position.z = (i * (4/10)) - 2;
+                scene.add(line);
+
+                // 定义横着的线段
+                var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({
+                    color: 0xffffff,
+                    opacity: 0.2
+                }));
+                line.position.x = (i * (4/10)) - 2;
+                line.rotation.y = 90 * Math.PI / 180;
+                scene.add(line);
+
+                // 渲染
+                renderer.render(scene, camera);
+            }
+            }
+        </script>
+    </body>
+    </html>
+    
+    
